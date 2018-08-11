@@ -1,6 +1,6 @@
 from ast import literal_eval as eval
 
-board_size = 8
+board_size = 6
 BLACK = '\u26AB'
 WHITE = '\u26AA'
 EMPTY = '\u2B1c'
@@ -46,6 +46,7 @@ def print_board(board):
 def game_loop(board, piece):
     print()
     print_board(board)
+    print_valid_move(board, piece)
     while(True):
         try:
             move = eval(input('Place %s where? ' % piece))
@@ -98,6 +99,17 @@ def has_valid_move(board, piece):
         for x in range(board_size):
             if is_valid_move(board, piece, (y,x)): return True
     return False
+
+def print_valid_move(board, piece):
+    listValidmove = []
+    string = 'abcdefgh'
+    for y in range(board_size):
+        for x in range(board_size):
+            if is_valid_move(board, piece, (y,x)):
+                listValidmove.append((string[y],x+1))
+    print("Valid Choice: ",listValidmove)
+
+
 
 if __name__ == '__main__':
     main()
