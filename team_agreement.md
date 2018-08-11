@@ -11,6 +11,20 @@ Workload:
 	truc	50%
 Strategy:
 	Explan codebase every check-in
+	Updating progress every check-in
+
+
+Task: (OK, NOK)
+
+	Display board 
+	Possible moves algorithm
+	Play the move that the player inputs
+	Error handling
+	When a player cannot play
+	End condition: both players cannot play anymore
+	
+	
+	
 
 Progress:
 Begin:
