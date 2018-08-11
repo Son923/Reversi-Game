@@ -1,9 +1,9 @@
 from ast import literal_eval as eval
 
 board_size = 6
-BLACK = '\u26AB'
-WHITE = '\u26AA'
-EMPTY = '\u2B1c'
+BLACK = 'B'
+WHITE = 'W'
+EMPTY = '.'
 offsets = ((0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1))
 
 def inverse(piece):
@@ -49,8 +49,27 @@ def game_loop(board, piece):
     print_valid_move(board, piece)
     while(True):
         try:
-            move = eval(input('Place %s where? ' % piece))
-            move = tuple(reversed(move))
+            # change alp to num
+            move = []
+            if piece == BLACK:
+                player = 'A'
+            else:
+                player = 'B'
+            inputMove = input("Player " + player + ": ")
+            inputMove = inputMove.replace('a','0')
+            inputMove = inputMove.replace('b','1')
+            inputMove = inputMove.replace('c','2')
+            inputMove = inputMove.replace('d','3')
+            inputMove = inputMove.replace('e','4')
+            inputMove = inputMove.replace('f','5')
+            inputMove = inputMove.replace('g','6')
+            inputMove = inputMove.replace('h','7')
+            move.append(int(inputMove[1]))
+            move.append(int(inputMove[0]))
+
+            # move = eval(input('Place %s where? ' % piece))
+            # move = tuple(reversed(move))
+
             # x,y -> y,x (easier to use)
             if is_valid_move(board, piece, move):
                 place_piece(board, piece, move)
@@ -59,7 +78,7 @@ def game_loop(board, piece):
                 raise AssertionError
         except (TypeError, ValueError, IndexError, SyntaxError, AssertionError):
             #   ------------------bad  input------------------  ---bad move---
-            print('Invalid move. Try again.')
+            print(inputMove, ': Invalid choice')
 
 def is_valid_move(board, piece, move):
     if board[move[0]][move[1]] is not EMPTY: return False
@@ -101,13 +120,16 @@ def has_valid_move(board, piece):
     return False
 
 def print_valid_move(board, piece):
-    listValidmove = []
+    # listValidmove = []
     string = 'abcdefgh'
+    validchoice = ''
     for y in range(board_size):
         for x in range(board_size):
             if is_valid_move(board, piece, (y,x)):
-                listValidmove.append((string[y],x+1))
-    print("Valid Choice: ",listValidmove)
+                # listValidmove.append((y,x))
+                validchoice = validchoice + string[y] + str(x+1) + ' '
+    # print(listValidmove)
+    print("Valid Choice: ",validchoice)
 
 
 
