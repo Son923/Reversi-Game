@@ -1,6 +1,7 @@
-from ast import literal_eval as eval
+import copy
 
-board_size = 6
+board_size = 8
+player = 'A'
 BLACK = 'B'
 WHITE = 'W'
 EMPTY = '.'
@@ -26,7 +27,7 @@ def main():
         print("It's a tie!")
     else:
         print()
-        print('{token} is the winner!' % (BLACK if black>white else WHITE))
+        print('{token} is the winner!' % ('A' if black>white else 'B'))
     return
 
 def create_board():
@@ -39,8 +40,23 @@ def create_board():
     return board
 
 def print_board(board):
-    for row in range(len(board)):
-        print(*board[row], sep='')
+    alpha = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    copyBoard = []
+    for i in board:
+        copyBoard.append(i)
+    print(board)
+    print(copyBoard)
+    copyBoard[0].insert(0,'1')
+    copyBoard[1].insert(0,'2')
+    copyBoard[2].insert(0,'3')
+    copyBoard[3].insert(0,'4')
+    copyBoard[4].insert(0,'5')
+    copyBoard[5].insert(0,'6')
+    copyBoard[6].insert(0,'7')
+    copyBoard[7].insert(0,'8')
+    newBoard = '\n'.join([''.join(['{:2}'.format(item) for item in row]) for row in copyBoard])
+    print(*alpha)
+    print(newBoard)
     return
 
 def game_loop(board, piece):
@@ -56,6 +72,7 @@ def game_loop(board, piece):
             else:
                 player = 'B'
             inputMove = input("Player " + player + ": ")
+            errorMove = inputMove
             inputMove = inputMove.replace('a','0')
             inputMove = inputMove.replace('b','1')
             inputMove = inputMove.replace('c','2')
@@ -64,11 +81,8 @@ def game_loop(board, piece):
             inputMove = inputMove.replace('f','5')
             inputMove = inputMove.replace('g','6')
             inputMove = inputMove.replace('h','7')
-            move.append(int(inputMove[1]))
-            move.append(int(inputMove[0]))
-
-            # move = eval(input('Place %s where? ' % piece))
-            # move = tuple(reversed(move))
+            move.append(int(inputMove[1]))  # change input to (row, col)
+            move.append(int(inputMove[0]))  # change input to (row, col)
 
             # x,y -> y,x (easier to use)
             if is_valid_move(board, piece, move):
@@ -78,7 +92,7 @@ def game_loop(board, piece):
                 raise AssertionError
         except (TypeError, ValueError, IndexError, SyntaxError, AssertionError):
             #   ------------------bad  input------------------  ---bad move---
-            print(inputMove, ': Invalid choice')
+            print(errorMove, ': Invalid choice')
 
 def is_valid_move(board, piece, move):
     if board[move[0]][move[1]] is not EMPTY: return False
