@@ -19,10 +19,10 @@ Strategy:
 Task: (OK, NOK)
 
 	Display board OK
-	Possible moves algorithm
-	Play the move that the player inputs
+	Possible moves algorithm OK
+	Play the move that the player inputs OK
 	Error handling
-	When a player cannot play
+	When a player cannot play NOK
 	End condition: both players cannot play anymore
 	Count score
 	
@@ -37,3 +37,6 @@ Begin:
 1st check-in
 	son	count score
 	truc 	algorithm for possible moves
+
+2nd check-in
+	son

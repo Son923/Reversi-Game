@@ -38,8 +38,10 @@ def create_board():
     return board
 
 def print_board(board):
+    # alpha = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    # print(*alpha)
     for row in range(len(board)):
-        print(*board[row], sep='')
+        print(*board[row], sep=' ')
     return
 
 def game_loop(board, piece):

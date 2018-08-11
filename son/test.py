@@ -43,8 +43,6 @@ def print_board(board):
     alpha = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     copyBoard = []
     copyBoard = list(board)
-    print(id(board))
-    print(id(copyBoard))
     copyBoard[0].insert(0,'1')
     copyBoard[1].insert(0,'2')
     copyBoard[2].insert(0,'3')
@@ -56,10 +54,10 @@ def print_board(board):
     newBoard = '\n'.join([''.join(['{:2}'.format(item) for item in row]) for row in copyBoard])
     print(*alpha)
     print(newBoard)
-    
+
 
 def game_loop(board, piece):
-    print()
+    # print()
     print_board(board)
     print_valid_move(board, piece)
     while(True):
