@@ -1,9 +1,10 @@
 from ast import literal_eval as eval
 
 board_size = 8
-BLACK = '\u26AB'
-WHITE = '\u26AA'
-EMPTY = '\u2B1c'
+player = 'A'
+BLACK = 'B'
+WHITE = 'W'
+EMPTY = '.'
 offsets = ((0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1))
 
 def inverse(piece):

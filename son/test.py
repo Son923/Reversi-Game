@@ -57,7 +57,7 @@ def print_board(board):
 
 
 def game_loop(board, piece):
-    # print()
+    print()
     print_board(board)
     print_valid_move(board, piece)
     while(True):

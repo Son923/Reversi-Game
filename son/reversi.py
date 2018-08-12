@@ -1,4 +1,4 @@
-board_size = 8
+board_size = 6
 player = 'A'
 BLACK = 'B'
 WHITE = 'W'
