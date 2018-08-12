@@ -1,7 +1,7 @@
-import copy
+from ast import literal_eval as eval
 
-board_size = 8
-player = 'A'
+board_size = 9
+player = 'B'
 BLACK = 'B'
 WHITE = 'W'
 EMPTY = '.'
@@ -13,48 +13,59 @@ def inverse(piece):
 def main():
     board = create_board()
     piece = BLACK
-    while has_valid_move(board, piece):
+    while has_valid_move(board, piece):  # check if B has move
         game_loop(board, piece)
-        if has_valid_move(board, inverse(piece)):
-            piece = inverse(piece)
+        if has_valid_move(board, inverse(piece)):  # check if W has move
+            piece = inverse(piece)  # turn piece to W
+        else:  # If W dont have move
+            print_board(board)
+            print("Player", inverse(piece), "cannot play.")  # print W can't play
+            # piece is still B
     print_board(board)
+    print("Player", piece, "cannot play.")
     black, white = 0,0
     for row in board:
         for token in row:
             if token is WHITE: white += 1
             if token is BLACK: black += 1
+    print('End of the game. W: {}, B: {}'.format(white, black))
     if black == white:
-        print("It's a tie!")
+        print("Draw.")
     else:
-        print()
-        print('{token} is the winner!' % ('A' if black>white else 'B'))
+        # print()
+        if black > white:
+            print('B wins.')
+        else:
+            print('W wins.')
     return
 
 def create_board():
-    board = [[EMPTY for x in range(board_size)] for x in range(board_size)]
-    half = board_size//2
-    board[half-1][half-1] = WHITE
-    board[half][half] = WHITE
-    board[half-1][half] = BLACK
-    board[half][half-1] = BLACK
+    board = [[EMPTY for x in range(9)] for x in range(9)]
+
+    board[4][4] = WHITE
+    board[5][5] = WHITE
+    board[4][5] = BLACK
+    board[5][4] = BLACK
+
+    # board[7][7] = WHITE
+    # board[6][7] = BLACK
+    # board[5][7] = WHITE
+
+    board[0] = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    board[1][0] = '1'
+    board[2][0] = '2'
+    board[3][0] = '3'
+    board[4][0] = '4'
+    board[5][0] = '5'
+    board[6][0] = '6'
+    board[7][0] = '7'
+    board[8][0] = '8'
     return board
 
 def print_board(board):
-    alpha = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    copyBoard = []
-    copyBoard = list(board)
-    copyBoard[0].insert(0,'1')
-    copyBoard[1].insert(0,'2')
-    copyBoard[2].insert(0,'3')
-    copyBoard[3].insert(0,'4')
-    copyBoard[4].insert(0,'5')
-    copyBoard[5].insert(0,'6')
-    copyBoard[6].insert(0,'7')
-    copyBoard[7].insert(0,'8')
-    newBoard = '\n'.join([''.join(['{:2}'.format(item) for item in row]) for row in copyBoard])
-    print(*alpha)
-    print(newBoard)
-
+    for row in range(len(board)):
+        print(*board[row], sep=' ')
+    return
 
 def game_loop(board, piece):
     print()
@@ -65,19 +76,20 @@ def game_loop(board, piece):
             # change alp to num
             move = []
             if piece == BLACK:
-                player = 'A'
-            else:
                 player = 'B'
+            else:
+                player = 'W'
             inputMove = input("Player " + player + ": ")
             errorMove = inputMove
-            inputMove = inputMove.replace('a','0')
-            inputMove = inputMove.replace('b','1')
-            inputMove = inputMove.replace('c','2')
-            inputMove = inputMove.replace('d','3')
-            inputMove = inputMove.replace('e','4')
-            inputMove = inputMove.replace('f','5')
-            inputMove = inputMove.replace('g','6')
-            inputMove = inputMove.replace('h','7')
+
+            inputMove = inputMove.replace('a','1')
+            inputMove = inputMove.replace('b','2')
+            inputMove = inputMove.replace('c','3')
+            inputMove = inputMove.replace('d','4')
+            inputMove = inputMove.replace('e','5')
+            inputMove = inputMove.replace('f','6')
+            inputMove = inputMove.replace('g','7')
+            inputMove = inputMove.replace('h','8')
             move.append(int(inputMove[1]))  # change input to (row, col)
             move.append(int(inputMove[0]))  # change input to (row, col)
 
@@ -92,7 +104,8 @@ def game_loop(board, piece):
             print(errorMove, ': Invalid choice')
 
 def is_valid_move(board, piece, move):
-    if board[move[0]][move[1]] is not EMPTY: return False
+    if board[move[0]][move[1]] is not EMPTY:
+        return False
     for offset in offsets:
         check = [move[0]+offset[0], move[1]+offset[1]]
         while 0<=check[0]<board_size-1 and 0<=check[1]<board_size-1 and \
@@ -136,13 +149,13 @@ def print_valid_move(board, piece):
     validchoice = ''
     for y in range(board_size):
         for x in range(board_size):
-            if is_valid_move(board, piece, (y,x)):
+            if is_valid_move(board, piece, (x,y)):
                 # listValidmove.append((y,x))
-                validchoice = validchoice + string[y] + str(x+1) + ' '
-    # print(listValidmove)
-    print("Valid Choice: ",validchoice)
-
-
+                validchoice = validchoice + string[y-1] + str(x) + ' '
+    if validchoice is None:
+        print('Player ', piece, 'cannot play.')
+    else:
+        print("Valid Choice: ",validchoice)
 
 if __name__ == '__main__':
     main()
