@@ -14,39 +14,6 @@ def inverse(piece):
     return BLACK if piece is WHITE else WHITE
 
 
-def main():
-    board = create_board()
-    piece = BLACK
-    while has_valid_move(board, piece):  # check if B has move
-        game_loop(board, piece)
-        if has_valid_move(board, inverse(piece)):  # check if W has move
-            piece = inverse(piece)  # turn piece to W
-        else:  # If W dont have move
-            print_board(board)
-            print("Player", inverse(piece), "cannot play.")  # W can not play
-            # piece is still B
-    print_board(board)
-    print("Player", piece, "cannot play.")
-    black, white = 0, 0  # set ori score
-    # score
-    for row in board:
-        for token in row:
-            if token is WHITE:
-                white += 1
-            if token is BLACK:
-                black += 1
-    print('End of the game. W: {}, B: {}'.format(white, black))
-    if black == white:
-        print("Draw.")
-    else:
-        # print()
-        if black > white:
-            print('B wins.')
-        else:
-            print('W wins.')
-    return
-
-
 def create_board():  # create begining board
     board = [[EMPTY for x in range(9)] for x in range(9)]
 
@@ -72,16 +39,18 @@ def create_board():  # create begining board
     return board
 
 
-def print_board(board):  # print current board
-    for row in range(len(board)):
-        print(*board[row], sep=' ')
-    return
+# def print_board(board):  # print current board
+#     for row in range(len(board)):
+#         print(*board[row], sep=' ')
+#     return
 
 
 def game_loop(board, piece):  # Print cur board+valid move+exe move if valid
-    # print()
-    print_board(board)
-    print_valid_move(board, piece)
+    # print board
+    for row in range(len(board)):
+        print(*board[row], sep=' ')
+
+    print(print_valid_move(board, piece))
     while(True):
         try:
             # change alp to num
@@ -118,6 +87,7 @@ def game_loop(board, piece):  # Print cur board+valid move+exe move if valid
                 SyntaxError, AssertionError)):
             #   ------------------bad  input------------------  ---bad move---
             print(errorMove, ': Invalid choice')
+            print(print_valid_move(board, piece))
 
 
 def is_valid_move(board, piece, move):  # check if move is valid, return bool
@@ -176,10 +146,47 @@ def print_valid_move(board, piece):  # print valid move
                 # listValidmove.append((y,x))
                 validchoice = validchoice + string[y - 1] + str(x) + ' '
     if validchoice is None:
-        print('Player', piece, 'cannot play.')
+        return 'Player ' + piece + 'cannot play.'
     else:
-        print("Valid Choices:", validchoice)
+        return "Valid Choice: " + validchoice
 
 
-if __name__ == '__main__':
-    main()
+def main():
+    board = create_board()
+    piece = BLACK
+    while has_valid_move(board, piece):  # check if B has move
+        game_loop(board, piece)
+        if has_valid_move(board, inverse(piece)):  # check if W has move
+            piece = inverse(piece)  # turn piece to W
+        else:  # If W dont have move
+            # print board
+            for row in range(len(board)):
+                print(*board[row], sep=' ')
+
+            print("Player", inverse(piece), "cannot play.")  # W can not play
+            # piece is still B
+    # print board
+    for row in range(len(board)):
+        print(*board[row], sep=' ')
+
+    print("Player", piece, "cannot play.")
+    black, white = 0, 0  # set ori score
+    # score
+    for row in board:
+        for token in row:
+            if token is WHITE:
+                white += 1
+            if token is BLACK:
+                black += 1
+    print('End of the game. W: {}, B: {}'.format(white, black))
+    if black == white:
+        return "Draw."
+    else:
+        # print()
+        if black > white:
+            return 'B wins.'
+        else:
+            return 'W wins.'
+
+
+print(main())

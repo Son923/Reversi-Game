@@ -73,7 +73,8 @@ def print_board(board):  # print current board
 def game_loop(board, piece):  # Print current board + valid move + exe move if valid
     print()
     print_board(board)
-    print_valid_move(board, piece)
+    print(print_valid_move(board, piece))
+    # print_valid_move(board, piece)
     while(True):
         try:
             # change alp to num
@@ -160,9 +161,9 @@ def print_valid_move(board, piece):  #print valid move
                 # listValidmove.append((y,x))
                 validchoice = validchoice + string[y-1] + str(x) + ' '
     if validchoice is None:
-        print('Player ', piece, 'cannot play.')
+        return 'Player ' + piece + 'cannot play.'
     else:
-        print("Valid Choice: ",validchoice)
+        return "Valid Choice: " + validchoice
 
-if __name__ == '__main__':
-    main()
+
+main()
