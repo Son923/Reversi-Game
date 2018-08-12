@@ -83,7 +83,7 @@ def game_loop(board, piece):  # Print cur board+valid move+exe move if valid
                     return
                 else:
                     raise AssertionError
-        except ((TypeError, ValueError, IndexError,
+        except ((TypeError, ValueError, IndexError, EOFError,
                 SyntaxError, AssertionError)):
             #   ------------------bad  input------------------  ---bad move---
             print(errorMove, ': Invalid choice')

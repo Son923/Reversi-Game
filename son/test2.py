@@ -11,35 +11,6 @@ offsets = ((0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1))
 def inverse(piece):
     return BLACK if piece is WHITE else WHITE
 
-def main():
-    board = create_board()
-    piece = BLACK
-    while has_valid_move(board, piece):  # check if B has move
-        game_loop(board, piece)
-        if has_valid_move(board, inverse(piece)):  # check if W has move
-            piece = inverse(piece)  # turn piece to W
-        else:  # If W dont have move
-            print_board(board)
-            print("Player", inverse(piece), "cannot play.")  # print W can't play
-            # piece is still B
-    print_board(board)
-    print("Player", piece, "cannot play.")
-    black, white = 0,0  # set ori score
-    # score
-    for row in board:
-        for token in row:
-            if token is WHITE: white += 1
-            if token is BLACK: black += 1
-    print('End of the game. W: {}, B: {}'.format(white, black))
-    if black == white:
-        print("Draw.")
-    else:
-        # print()
-        if black > white:
-            print('B wins.')
-        else:
-            print('W wins.')
-    return
 
 def create_board():  #create begining board
     board = [[EMPTY for x in range(9)] for x in range(9)]
@@ -107,7 +78,8 @@ def game_loop(board, piece):  # Print current board + valid move + exe move if v
                     return
                 else:
                     raise AssertionError
-        except (TypeError, ValueError, IndexError, SyntaxError, AssertionError):
+        except ((EOFError, TypeError, ValueError, IndexError,
+                SyntaxError, AssertionError)):
             #   ------------------bad  input------------------  ---bad move---
             print(errorMove, ': Invalid choice')
 
