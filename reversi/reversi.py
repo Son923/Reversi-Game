@@ -41,18 +41,12 @@ def create_board():  # create begining board
     return board
 
 
-# def print_board(board):  # print current board
-#     for row in range(len(board)):
-#         print(*board[row], sep=' ')
-#     return
-
-
 def game_loop(board, piece):  # Print cur board+valid move+exe move if valid
     # print board
     for row in range(len(board)):
         print(*board[row], sep=' ')
-
-    print(print_valid_move(board, piece))
+    '\n'
+    print(print_valid_move(board, piece) , end ='\n')
     while(True):
         try:
             # change alp to num
@@ -89,7 +83,7 @@ def game_loop(board, piece):  # Print cur board+valid move+exe move if valid
                 SyntaxError, AssertionError)):
             #   ------------------bad  input------------------  ---bad move---
             print(errorMove, ': Invalid choice')
-            print(print_valid_move(board, piece))
+            print(print_valid_move(board, piece), end = '\n')
             sys.exit()
 
 
@@ -146,12 +140,11 @@ def print_valid_move(board, piece):  # print valid move
     for y in range(board_size):
         for x in range(board_size):
             if is_valid_move(board, piece, (x, y)):
-                # listValidmove.append((y,x))
                 validchoice = validchoice + string[y - 1] + str(x) + ' '
     if validchoice is None:
         return 'Player ' + piece + 'cannot play.'
     else:
-        return "Valid Choice: " + validchoice
+        return "Valid choices: " + validchoice
 
 
 def main():
@@ -165,13 +158,13 @@ def main():
             # print board
             for row in range(len(board)):
                 print(*board[row], sep=' ')
-
+            '\n'
             print("Player", inverse(piece), "cannot play.")  # W can not play
             # piece is still B
     # print board
     for row in range(len(board)):
         print(*board[row], sep=' ')
-
+    '\n'
     print("Player", piece, "cannot play.")
     black, white = 0, 0  # set ori score
     # score
