@@ -1,4 +1,6 @@
 from ast import literal_eval as eval
+import sys
+
 
 board_size = 9
 player = 'B'
@@ -64,7 +66,7 @@ def game_loop(board, piece):  # Print cur board+valid move+exe move if valid
             errorMove = inputMove
             if (inputMove[0] not in 'abcdefgh' or inputMove[1]
                     not in '12345678' or len(inputMove) > 2):
-                print(errorMove, ': Invalid choice')
+                raise AssertionError
             else:
                 inputMove = inputMove.replace('a', '1')
                 inputMove = inputMove.replace('b', '2')
@@ -88,6 +90,7 @@ def game_loop(board, piece):  # Print cur board+valid move+exe move if valid
             #   ------------------bad  input------------------  ---bad move---
             print(errorMove, ': Invalid choice')
             print(print_valid_move(board, piece))
+            sys.exit()
 
 
 def is_valid_move(board, piece, move):  # check if move is valid, return bool
