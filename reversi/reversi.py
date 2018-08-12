@@ -24,11 +24,6 @@ def create_board():  # create begining board
     board[4][5] = BLACK
     board[5][4] = BLACK
 
-    # for test
-    # board[7][7] = WHITE
-    # board[6][7] = BLACK
-    # board[5][7] = WHITE
-
     board[0] = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     board[1][0] = '1'
     board[2][0] = '2'
