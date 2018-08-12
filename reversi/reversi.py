@@ -9,7 +9,7 @@ WHITE = 'W'
 EMPTY = '.'
 offsets = (((0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0),
             (-1, 1)))
-# tuple of 8 position around checkpoint
+# 8 position around checkpoint = checkpoint + offset in offsets
 
 
 def inverse(piece):
@@ -46,7 +46,7 @@ def game_loop(board, piece):  # Print cur board+valid move+exe move if valid
     for row in range(len(board)):
         print(*board[row], sep=' ')
     '\n'
-    print(print_valid_move(board, piece) , end ='\n')
+    print(print_valid_move(board, piece), end='\n')
     while(True):
         try:
             # change alp to num
@@ -83,7 +83,7 @@ def game_loop(board, piece):  # Print cur board+valid move+exe move if valid
                 SyntaxError, AssertionError)):
             #   ------------------bad  input------------------  ---bad move---
             print(errorMove, ': Invalid choice')
-            print(print_valid_move(board, piece), end = '\n')
+            print(print_valid_move(board, piece), end='\n')
             sys.exit()
 
 
@@ -128,7 +128,7 @@ def flip(board, piece, move, offset):  # flip inverse piece in middle
 def has_valid_move(board, piece):  # check if Player has move, return bool
     for y in range(board_size):
         for x in range(board_size):
-            if is_valid_move(board, piece, (y, x)):
+            if is_valid_move(board, piece, (y, x)):  # Use is_valid check whole
                 return True
     return False
 
