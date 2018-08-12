@@ -148,7 +148,7 @@ def print_valid_move(board, piece):  # print valid move
     if validchoice is None:
         return 'Player ' + piece + 'cannot play.'
     else:
-        return "Valid Choice: " + validchoice
+        return "Valid choices: " + validchoice
 
 
 def main():
