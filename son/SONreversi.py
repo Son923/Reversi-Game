@@ -189,4 +189,5 @@ def main():
             return 'W wins.'
 
 
-print(main())
+if __name__ == '__main__':
+    main()

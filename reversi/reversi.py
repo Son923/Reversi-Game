@@ -1,6 +1,7 @@
 from ast import literal_eval as eval
 
 board_size = 9
+player = 'B'
 BLACK = 'B'
 WHITE = 'W'
 EMPTY = '.'
@@ -50,40 +51,43 @@ def game_loop(board, piece):  # Print cur board+valid move+exe move if valid
         print(*board[row], sep=' ')
 
     print(print_valid_move(board, piece))
-    try:
-        # change alp to num
-        move = []
-        # INPUT
-        if piece == BLACK:
-            inputMove = input("Player B: ")
-        else:
-            inputMove = input("Player W: ")
-        if (inputMove[0] not in 'abcdefgh' or inputMove[1]
-                not in '12345678' or len(inputMove) > 2):
-            raise AssertionError
-        else:
-            inputMove = inputMove.replace('a', '1')
-            inputMove = inputMove.replace('b', '2')
-            inputMove = inputMove.replace('c', '3')
-            inputMove = inputMove.replace('d', '4')
-            inputMove = inputMove.replace('e', '5')
-            inputMove = inputMove.replace('f', '6')
-            inputMove = inputMove.replace('g', '7')
-            inputMove = inputMove.replace('h', '8')
-            move.append(int(inputMove[1]))  # change input to (row, col)
-            move.append(int(inputMove[0]))  # change input to (row, col)
-
-            # x,y -> y,x (easier to use)
-            if is_valid_move(board, piece, move):
-                place_piece(board, piece, move)
-                return
+    while(True):
+        try:
+            # change alp to num
+            move = []
+            if piece == BLACK:
+                player = 'B'
             else:
-                raise AssertionError
-    except ((TypeError, ValueError, IndexError,
-            SyntaxError, AssertionError)):
-        #   ------------------bad  input------------------  ---bad move---
-        print(inputMove, ': Invalid choice')
-        print(print_valid_move(board, piece))
+                player = 'W'
+            # INPUT
+            inputMove = input("Player " + player + ": ")
+            errorMove = inputMove
+            if (inputMove[0] not in 'abcdefgh' or inputMove[1]
+                    not in '12345678' or len(inputMove) > 2):
+                print(errorMove, ': Invalid choice')
+            else:
+                inputMove = inputMove.replace('a', '1')
+                inputMove = inputMove.replace('b', '2')
+                inputMove = inputMove.replace('c', '3')
+                inputMove = inputMove.replace('d', '4')
+                inputMove = inputMove.replace('e', '5')
+                inputMove = inputMove.replace('f', '6')
+                inputMove = inputMove.replace('g', '7')
+                inputMove = inputMove.replace('h', '8')
+                move.append(int(inputMove[1]))  # change input to (row, col)
+                move.append(int(inputMove[0]))  # change input to (row, col)
+
+                # x,y -> y,x (easier to use)
+                if is_valid_move(board, piece, move):
+                    place_piece(board, piece, move)
+                    return
+                else:
+                    raise AssertionError
+        except ((TypeError, ValueError, IndexError,
+                SyntaxError, AssertionError)):
+            #   ------------------bad  input------------------  ---bad move---
+            print(errorMove, ': Invalid choice')
+            print(print_valid_move(board, piece))
 
 
 def is_valid_move(board, piece, move):  # check if move is valid, return bool
@@ -144,7 +148,7 @@ def print_valid_move(board, piece):  # print valid move
     if validchoice is None:
         return 'Player ' + piece + 'cannot play.'
     else:
-        return "Valid choices: " + validchoice
+        return "Valid Choice: " + validchoice
 
 
 def main():
@@ -185,4 +189,5 @@ def main():
             return 'W wins.'
 
 
-print(main())
+if __name__ == '__main__':
+    main()
